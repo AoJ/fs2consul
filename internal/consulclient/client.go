@@ -32,7 +32,7 @@ func NewConsulClient(addr string, token string, prefix string) *ConsulClient {
 	config := api.DefaultConfig()
 	config.Address = addr
 	config.Token = token
-	config.Datacenter = "vcdev"
+	config.Datacenter = "n13dev"
 	client, err = api.NewClient(config)
 	if err != nil {
 		log.Fatalf("Fatal: %s\n", err.Error())
