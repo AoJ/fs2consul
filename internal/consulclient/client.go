@@ -145,19 +145,17 @@ func (cc *ConsulClient) SyncKV(kv []fs.KVPair, sync bool) error {
 	ckv := client.KV()
 	if sync {
 		log.Println("TRANSACTION START")
-		ok, response, qm, err := ckv.Txn(data, nil)
+		ok, response, _, err := ckv.Txn(data, nil)
 		if err != nil {
 			return err
 		}
-		log.Printf("QM: %s\n", qm)
-		s, err = json.MarshalIndent(qm, "", "  ")
 		log.Printf("STATE: %t\n", ok)
 		if !ok {
 			log.Fatal("ERROR: TRANSACTION ROLLED BACK")
 		}
 		log.Println("TRANSACTION COMMIT")
 		log.Println("APPLIED KV KEYS:")
-		s, err = json.MarshalIndent(response, "", "  ")
+		s, err = json.MarshalIndent(response.Results, "", "  ")
 		if err != nil {
 			return err
 		}
